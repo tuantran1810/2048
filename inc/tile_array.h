@@ -23,4 +23,6 @@ struct BoardGameTileArray : public TileArray {
 private:
     int __mergeLeft(int baseIndex);
     int __mergeRight(int baseIndex);
+    int __findNextLeftAvailable(int baseIndex);
+    int __findNextRightAvailable(int baseIndex);
 };

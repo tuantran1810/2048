@@ -11,18 +11,22 @@ GameController::ServeInput() {
     switch(char c = std::getchar()) {
         case 'w': //up arrow
             std::cerr << "key up handled" << std::endl;
+            if(!boardGame.OnUpKey()) exitCallback();
             std::cout << boardGame;
             break;
         case 's': //down arrow
             std::cerr << "key down handled" << std::endl;
+            if(!boardGame.OnDownKey()) exitCallback();
             std::cout << boardGame;
             break;
         case 'a': //left arrow
             std::cerr << "key left handled" << std::endl;
+            if(!boardGame.OnLeftKey()) exitCallback();
             std::cout << boardGame;
             break;
         case 'd': //right arrow
             std::cerr << "key right handled" << std::endl;
+            if(!boardGame.OnRightKey()) exitCallback();
             std::cout << boardGame;
             break;
         case 'x': //x key
@@ -30,6 +34,6 @@ GameController::ServeInput() {
             exitCallback();
             break;
         default:
-        	std::cerr << "invalid key: " << c << std::endl;
+            std::cerr << "invalid key: " << c << std::endl;
     }
 }

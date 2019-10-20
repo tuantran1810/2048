@@ -2,6 +2,7 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <memory>
 #include <functional>
 #include <iomanip>
 #include <ctime>
@@ -18,6 +19,13 @@ struct BoardGame {
 
     void Init();
     void Start();
+    void SetWinNotification(Tile::WinNotification winNotification) {
+        this->winNotification = winNotification;
+    }
+    bool OnLeftKey();
+    bool OnRightKey();
+    bool OnUpKey();
+    bool OnDownKey();
     void End();
 
 private:
@@ -27,14 +35,17 @@ private:
     int winValue;
     TileArray tiles;
     std::vector<BoardGameTileArray> rows;
-    std::vector<TileArray> cols;
+    std::vector<BoardGameTileArray> cols;
     std::set<int> blankTiles;
+    Tile::WinNotification winNotification;
 
     bool throwNumberToTile();
     int randomIndex(int limit) {
-        std::srand(std::time(nullptr));
+        std::srand(clock());
         return std::rand() % limit;
     }
+
+    bool onAfterMove();
 
     friend std::ostream & operator<< (std::ostream &out, const BoardGame &boardGame);
 };

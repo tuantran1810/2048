@@ -11,7 +11,7 @@ BoardGame::Init() {
 
     for (int i = 0; i < numOfRow; i++) {
         for (int j = 0; j < numOfCol; j++) {
-            auto tile = Tile::CreateTile(i, j,
+            auto tile = Tile::CreateTile(i, j, winValue,
                 [&] (int row, int col, bool containNumber) {
                     int index = row * 4 + col;
                     if (containNumber) {
@@ -20,6 +20,9 @@ BoardGame::Init() {
                         return;
                     }
                     blankTiles.insert(index);
+                },
+                [=](){
+                    this->winNotification();
                 });
             auto tile1 = tile;
             auto tile2 = tile;
@@ -37,7 +40,36 @@ BoardGame::Start() {
     throwNumberToTile();
 }
 
-void BoardGame::End() {
+bool
+BoardGame::OnLeftKey() {
+    for (auto& row : rows)
+        row.MergeLeft();
+    return onAfterMove();
+}
+
+bool
+BoardGame::OnRightKey() {
+    for (auto& row : rows)
+        row.MergeRight();
+    return onAfterMove();
+}
+
+bool
+BoardGame::OnUpKey() {
+    for (auto& col : cols)
+        col.MergeUp();
+    return onAfterMove();
+}
+
+bool
+BoardGame::OnDownKey() {
+    for (auto& col : cols)
+        col.MergeDown();
+    return onAfterMove();
+}
+
+void
+BoardGame::End() {
     tiles.clear();
     rows.clear();
     cols.clear();
@@ -54,6 +86,15 @@ BoardGame::throwNumberToTile() {
         return true;
     }
     return false;
+}
+
+bool
+BoardGame::onAfterMove() {
+    if (!throwNumberToTile()) {
+        std::cout << "You loose!" << std::endl;
+        return false;
+    }
+    return true;
 }
 
 std::ostream& operator<< (std::ostream& out, const BoardGame &boardGame) {

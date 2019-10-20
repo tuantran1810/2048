@@ -4,25 +4,38 @@
 #include <iostream>
 #include <functional>
 #include <iomanip>
+#include <memory>
 #include <ctime>
 
 struct Tile {
 
     typedef std::function<void(int, int, bool)> TileStatusCallback;
+    typedef std::function<void(void)> WinNotification;
     typedef std::shared_ptr<Tile> TilePtr;
 
     Tile() {}
 
-    Tile(int row, int col, int num, TileStatusCallback callback):
-        row(row), col(col), num(num), statusCallback(callback) {}
+    Tile(int row, int col, int num, int winValue, TileStatusCallback callback, WinNotification winCallback):
+        row(row), col(col), num(num), winValue(winValue), statusCallback(callback), winCallback(winCallback) {}
 
-    static auto CreateTile(int row, int col, TileStatusCallback callback) {
-        return TilePtr(new Tile(row, col, 0, callback));
+    static auto CreateTile(int row, int col, int winValue, TileStatusCallback callback, WinNotification winCallback) {
+        return TilePtr(new Tile(row, col, 0, winValue, callback, winCallback));
     }
 
-    void MergeWith(Tile& other) {
+    bool MergeWith(Tile& other) {
+        if (num != other.num) return false;
         num += other.num;
         other.num = 0;
+        TriggerStatusCallback();
+        other.TriggerStatusCallback();
+        if (num >= winValue) winCallback();
+        return true;
+    }
+
+    void Swap(Tile& other) {
+        auto tmp = other.num;
+        other.num = num;
+        num = tmp;
         TriggerStatusCallback();
         other.TriggerStatusCallback();
     }
@@ -47,11 +60,13 @@ private:
     int row;
     int col;
     int num;
+    int winValue;
     TileStatusCallback statusCallback;
+    WinNotification winCallback;
 
     void generateValue() {
         std::srand(clock());
-        if (std::rand() % 2)
+        if (std::rand() % 4)
             num = 2;
         else
             num = 4;

@@ -11,7 +11,7 @@ int main(void) {
     std::cerr.rdbuf(redirectFile.rdbuf());
 
     bool running = true;
-    BoardGame boardGame(4, 4, 2048);
+    BoardGame boardGame(4, 4, 128);
     GameController gameController(boardGame, [&] () mutable {
         std::cerr << "exit triggered!" << std::endl;
         running = false;
