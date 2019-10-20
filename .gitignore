@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+
+build/2048
+build/log

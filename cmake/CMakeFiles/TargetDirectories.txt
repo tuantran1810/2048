@@ -1,3 +1,0 @@
-/home/tuantran/Source/2048/cmake/CMakeFiles/rebuild_cache.dir
-/home/tuantran/Source/2048/cmake/CMakeFiles/2048.dir
-/home/tuantran/Source/2048/cmake/CMakeFiles/edit_cache.dir
