@@ -91,14 +91,16 @@ BoardGame::throwNumberToTile() {
 bool
 BoardGame::onAfterMove() {
     if (!throwNumberToTile()) {
-        std::cout << "You loose!" << std::endl;
+        std::cout << "You loose!" << std::endl << "\r";
         return false;
     }
     return true;
 }
 
 std::ostream& operator<< (std::ostream& out, const BoardGame &boardGame) {
+    std::cout << "==========================================" << std::endl << "\r";
     for (auto& row : boardGame.rows)
         out << row << std::endl;
+    std::cout << "==========================================" << std::endl << "\r";
     return out;
 }

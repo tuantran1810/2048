@@ -91,7 +91,7 @@ std::ostream& operator<< (std::ostream& out, const BoardGameTileArray& array) {
     std::stringstream ss;
     for (int i = 0; i < static_cast<int>(array.size()); i++)
         ss << (*array[i]);
-    ss << std::endl;
+    ss << std::endl << "\r";
 
     out << ss.str();
     return out;
