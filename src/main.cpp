@@ -11,14 +11,15 @@ int main(int argc, char* argv[]) {
     std::ofstream redirectFile("log");
     std::cerr.rdbuf(redirectFile.rdbuf());
 
-    if (argc != 4) {
-        std::cerr << "wrong configuration" << std::endl;
-        return 0;
-    }
+    int numOfRows = 4;
+    int numOfCols = 4;
+    int winNum = 2048;
 
-    int numOfRows = std::stoi(argv[1]);
-    int numOfCols = std::stoi(argv[2]);
-    int winNum = std::stoi(argv[3]);
+    if (argc == 4) {
+        numOfRows = std::stoi(argv[1]);
+        numOfCols = std::stoi(argv[2]);
+        winNum = std::stoi(argv[3]);
+    }
 
     bool running = true;
     BoardGame boardGame(numOfRows, numOfCols, winNum);

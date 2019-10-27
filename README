@@ -1,0 +1,21 @@
+This code is built on C++14 standard, please make sure that you have installed lib ncurses before bulding
+
+How to build?
+    Just need to run makefile in ./2048/build:
+        cd ./build
+        make clean
+        make
+    A binary file named 2048 would be generated in ./build
+
+Run the original game of 4x4 board, 2048 of winning number
+
+The game is configurable, run the game with command:
+    ./2048 <n_rows> <n_cols> <number_to_win>
+for a customized board
+
+How to control?
+    A: Left
+    D: Right
+    W: Up
+    S: Down
+    X: Exit
