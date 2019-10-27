@@ -13,7 +13,7 @@ BoardGame::Init() {
         for (int j = 0; j < numOfCol; j++) {
             auto tile = Tile::CreateTile(i, j, winValue,
                 [&] (int row, int col, bool containNumber) {
-                    int index = row * 4 + col;
+                    int index = row * numOfCol + col;
                     if (containNumber) {
                         std::set<int>::iterator it = blankTiles.find(index);
                         if (it != blankTiles.end()) blankTiles.erase(it);
@@ -29,7 +29,7 @@ BoardGame::Init() {
             tiles.push_back(std::move(tile));
             rows[i].push_back(std::move(tile1));
             cols[j].push_back(std::move(tile2));
-            blankTiles.insert(i*4 + j);
+            blankTiles.insert(i*numOfCol + j);
         }
     }
 }
@@ -38,6 +38,7 @@ void
 BoardGame::Start() {
     throwNumberToTile();
     throwNumberToTile();
+    std::cerr << "done boardgame start" << std::endl;
 }
 
 bool

@@ -11,7 +11,7 @@ typedef std::vector<Tile::TilePtr> TileArray;
 struct BoardGameTileArray : public TileArray {
     BoardGameTileArray() {
         this->clear();
-        modified = true;
+        modified = false;
     }
 
     void MergeLeft();
