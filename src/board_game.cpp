@@ -90,9 +90,21 @@ BoardGame::throwNumberToTile() {
 
 bool
 BoardGame::onAfterMove() {
-    if (!throwNumberToTile()) {
-        return false;
+    bool modified = false;
+    bool mergeable = false;
+    for (auto& row : rows){
+        modified |= row.ModifiedGetReset();
+        mergeable |= row.Mergeable();
     }
+    for (auto& col : cols){
+        modified |= col.ModifiedGetReset();
+        mergeable |= col.Mergeable();
+    }
+
+    if (!modified)
+        return (blankTileCount() > 0) or mergeable;
+
+    throwNumberToTile();
     return true;
 }
 

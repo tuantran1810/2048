@@ -45,6 +45,10 @@ struct Tile {
         return num > 0;
     }
 
+    bool Mergeable(Tile& other) {
+        return num == other.num;
+    }
+
     void ThrowNumber() {
         if (ContainNumber()) return;
         generateValue();

@@ -47,5 +47,9 @@ private:
 
     bool onAfterMove();
 
+    int blankTileCount() {
+        return blankTiles.size();
+    }
+
     friend std::ostream & operator<< (std::ostream &out, const BoardGame &boardGame);
 };

@@ -10,7 +10,7 @@ BoardGameTileArray::MergeLeft() {
     int next = 0;
     do {
         next = __mergeLeft(next);
-    } while(next > 0);
+    } while(next >= 0);
 }
 
 void
@@ -18,7 +18,7 @@ BoardGameTileArray::MergeRight() {
     int next = this->size() - 1;
     do {
         next = __mergeRight(next);
-    } while(next > 0);
+    } while(next >= 0);
 }
 
 void
@@ -31,6 +31,16 @@ BoardGameTileArray::MergeDown() {
     MergeRight();
 }
 
+bool
+BoardGameTileArray::Mergeable() {
+    int next = 0;
+    bool result = false;
+    do {
+        next = __mergeable(next, result);
+    } while(next >= 0 && !result);
+    return result;
+}
+
 int
 BoardGameTileArray::__mergeLeft(int baseIndex) {
     if (not (baseIndex >= 0 and baseIndex < static_cast<int>(this->size()))) return -1;
@@ -39,11 +49,15 @@ BoardGameTileArray::__mergeLeft(int baseIndex) {
 
     auto nextAvailable = __findNextRightAvailable(baseIndex);
     if (nextAvailable != -1 && (*this)[nextAvailable] != nullptr) {
-        if (base->ContainNumber())
-            base->MergeWith(*(*this)[nextAvailable]);
-        else
+        if (base->ContainNumber()) {
+            modified |= base->MergeWith(*(*this)[nextAvailable]);
+            return baseIndex + 1;
+        }
+        else {
             base->Swap(*(*this)[nextAvailable]);
-        return baseIndex + 1;
+            modified |= true;
+            return baseIndex;
+        }
     }
     return -1;
 }
@@ -56,11 +70,15 @@ BoardGameTileArray::__mergeRight(int baseIndex) {
 
     auto nextAvailable = __findNextLeftAvailable(baseIndex);
     if (nextAvailable != -1 && (*this)[nextAvailable] != nullptr) {
-        if (base->ContainNumber())
-            base->MergeWith(*(*this)[nextAvailable]);
-        else
+        if (base->ContainNumber()) {
+            modified |= base->MergeWith(*(*this)[nextAvailable]);
+            return baseIndex - 1;
+        }
+        else {
             base->Swap(*(*this)[nextAvailable]);
-        return baseIndex - 1;
+            modified |= true;
+            return baseIndex;
+        }
     }
     return -1;
 }
@@ -85,6 +103,19 @@ BoardGameTileArray::__findNextLeftAvailable(int baseIndex) {
         if (cellPtr->ContainNumber()) return i;
     }
     return -1;
+}
+
+int
+BoardGameTileArray::__mergeable(int baseIndex, bool& result) {
+    if (not (baseIndex >= 0 and baseIndex < static_cast<int>(this->size()))) return -1;
+    auto base = (*this)[baseIndex];
+    if (base == nullptr) return -1;
+
+    auto nextAvailable = __findNextRightAvailable(baseIndex);
+    if (nextAvailable != -1 && (*this)[nextAvailable] != nullptr)
+        result = base->Mergeable(*(*this)[nextAvailable]);
+    else result = false;
+    return nextAvailable;
 }
 
 std::ostream& operator<< (std::ostream& out, const BoardGameTileArray& array) {
