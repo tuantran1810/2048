@@ -28,14 +28,11 @@ int main(int argc, char* argv[]) {
     });
 
     std::cerr << "starting" << std::endl;
-    boardGame.Start();
-    std::cout << boardGame << "\r";
 
     while(running) {
         gameController.ServeInput();
     }
 
-    boardGame.End();
     std::cerr << "end!!!" << std::endl;
     return 0;
 }

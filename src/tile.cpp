@@ -5,10 +5,13 @@
 #include <ctime>
 #include "tile.h"
 
+Painter* Painter::instance = nullptr;
+
 std::ostream& operator<< (std::ostream& out, const Tile& tile) {
+    Painter* painter = Painter::GetInstance();
     if (tile.ContainNumber())
-        out << std::setw(6) << std::right << tile.num;
+        out << painter->GetColor(tile.num) << std::setw(6) << std::right << tile.num;
     else
-        out << std::setw(6) << std::right << '.';
+        out << painter->GetColor(tile.num) << std::setw(6) << std::right << '.';
     return out;
 }

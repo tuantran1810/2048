@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <memory>
 #include <ctime>
+#include "painter.h"
 
 struct Tile {
 
