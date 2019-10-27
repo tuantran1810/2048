@@ -7,7 +7,7 @@ How to build?
         make
     A binary file named 2048 would be generated in ./build
 
-Run the original game of 4x4 board, 2048 of winning number
+Run the original game of 4x4 board, 2048 of winning number with command: ./2048
 
 The game is configurable, run the game with command:
     ./2048 <n_rows> <n_cols> <number_to_win>
