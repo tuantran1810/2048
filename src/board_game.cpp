@@ -80,8 +80,7 @@ bool
 BoardGame::throwNumberToTile() {
     if (blankTiles.empty()) return false;
     int index = randomIndex(blankTiles.size());
-    auto it = blankTiles.begin();
-    for (int i = 0; i < index; i++, it++) {}
+    auto it = std::next(blankTiles.begin(), index);
     if (tiles[*it] != nullptr) {
         tiles[*it]->ThrowNumber();
         return true;
