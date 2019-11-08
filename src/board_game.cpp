@@ -15,7 +15,7 @@ BoardGame::Init() {
                 [&] (int row, int col, bool containNumber) {
                     int index = row * numOfCol + col;
                     if (containNumber) {
-                        std::set<int>::iterator it = blankTiles.find(index);
+                        std::unordered_set<int>::iterator it = blankTiles.find(index);
                         if (it != blankTiles.end()) blankTiles.erase(it);
                         return;
                     }

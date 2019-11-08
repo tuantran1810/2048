@@ -7,7 +7,7 @@
 #include <iomanip>
 #include <ctime>
 #include <vector>
-#include <set>
+#include <unordered_set>
 
 #include "tile.h"
 #include "tile_array.h"
@@ -36,7 +36,7 @@ private:
     TileArray tiles;
     std::vector<BoardGameTileArray> rows;
     std::vector<BoardGameTileArray> cols;
-    std::set<int> blankTiles;
+    std::unordered_set<int> blankTiles;
     Tile::WinNotification winNotification;
 
     bool throwNumberToTile();
